@@ -1,0 +1,39 @@
+# Template file for 'WebStorm'
+pkgname=WebStorm
+version=2018.2.2
+revision=1
+depends="giflib"
+short_desc="Powerful IDE for modern JavaScript development"
+maintainer="Marcus Ahnve <m@hnve.org>"
+license="Proprietary"
+homepage="https://www.jetbrains.org/webstorm/"
+distfiles="https://download.jetbrains.com/webstorm/${pkgname}-${version}.tar.gz"
+checksum=9943b20fb4fa6552ca0537cfdcd061f1075a517a4c5823d155309297f9c161a8
+repository=nonfree
+nopie=yes
+only_for_archs="i686 x86_64"
+
+post_extract() {
+	mv $XBPS_BUILDDIR/WebStorm-182.4129.32 ${wrksrc}
+}
+
+do_install() {
+	vmkdir usr/bin
+	vmkdir usr/share/doc/${pkgname}
+	vmkdir usr/share/${pkgname}
+
+	mv bin lib plugins ${DESTDIR}/usr/share/${pkgname}
+	mv build.txt license help ${DESTDIR}/usr/share/doc/${pkgname}
+	rm ${DESTDIR}/usr/share/${pkgname}/bin/fsnotifier-arm
+	if [ "$XBPS_TARGET_MACHINE" = "x86_64" ]; then
+		rm ${DESTDIR}/usr/share/${pkgname}/bin/fsnotifier
+		rm ${DESTDIR}/usr/share/${pkgname}/bin/webstorm.vmoptions
+		rm ${DESTDIR}/usr/share/${pkgname}/lib/libpty/linux/x86/libpty.so
+	else
+		rm ${DESTDIR}/usr/share/${pkgname}/bin/fsnotifier64
+		rm ${DESTDIR}/usr/share/${pkgname}/bin/webstorm64.vmoptions
+		rm ${DESTDIR}/usr/share/${pkgname}/lib/libpty/linux/x86_64/libpty.so
+	fi
+
+	ln -sf /usr/share/${pkgname}/bin/webstorm.sh ${DESTDIR}/usr/bin/webstorm
+}
