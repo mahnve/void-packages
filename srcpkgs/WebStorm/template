@@ -35,5 +35,9 @@ do_install() {
 		rm ${DESTDIR}/usr/share/${pkgname}/lib/libpty/linux/x86_64/libpty.so
 	fi
 
+<<<<<<< HEAD
 	ln -sf /usr/share/${pkgname}/bin/webstorm.sh ${DESTDIR}/usr/bin/webstorm
+=======
+	ln -sf /usr/share/${pkgname}/bin/${pkgname}.sh ${DESTDIR}/usr/bin/${pkgname}
+>>>>>>> 7db8ca2451c689a9e2f46ee27c068c2ff7ce633d
 }
