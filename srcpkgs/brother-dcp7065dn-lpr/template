@@ -1,0 +1,28 @@
+# Tempate file for 'brother-dcp7065dn-lpr'
+pkgname=brother-dcp7065dn-lpr
+version=2.1.0
+revision=1
+maintainer="Marcus Ahnve <m@hnve.org>"
+homepage="http://support.brother.com/g/b/index.aspx"
+license="GPL-2"
+short_desc="LPR driver for the brother DCP-7065DN printer/scanner"
+distfiles="http://download.brother.com/welcome/dlf005483/dcp7065dnlpr-2.1.0-1.i386.deb"
+checksum=aeb6b0243b1be22aba99e162eea8abed63b146b8fd55c0dd63c6eada0c148834
+only_for_archs="i686 x86_64"
+create_wrksrc=yes
+depends="a2ps ghostscript"
+#mutable_files="/opt/brother/Printers/dcp7065dn/inf/brdcp197crc"
+nopie=yes
+
+if [ "$XBPS_TARGET_MACHINE" = "x86_64" ]; then
+	depends+=" glibc-32bit"
+fi
+
+do_extract() {
+	ar x ${XBPS_SRCDISTDIR}/${pkgname}-${version}/dcp7065dnlpr-${version}-1.i386.deb
+}
+
+do_install() {
+	mkdir -p ${DESTDIR}
+	tar xzpvf data.tar.gz -C ${DESTDIR}
+}
